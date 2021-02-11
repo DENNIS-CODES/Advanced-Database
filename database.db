@@ -1,0 +1,105 @@
+employee(emp_id : integer, emp_name: string) 
+
+department(dept_id: integer,dept_name:string) 
+
+paydetails(emp_id : integer, dept_id: integer, basic: integer, deductions: integer, additions: integer, DOJ: date) 
+
+payroll(emp_id : integer, pay_date: date) 
+
+ 
+
+Creating database: 
+
+create database db_emp_pay_scenerio; 
+
+use db_emp_pay_scenerio; 
+
+Create the tables with the appropriate integrity constraints 
+
+create table employee(emp_id int(10),emp_name varchar(50)); 
+
+create table department(dept_id int(10),dept_name varchar(50)); 
+
+create table paydetails(emp_id int(5) references employee(emp_id),dept_id int(6) references department(dept_id),basic int(7),deductions int(6),additions int(6),DOJ date); 
+
+create table payroll(emp_id int(5) references employee(emp_id),pay_date date); 
+
+Insert around 10 records in each of the tables 
+
+insert into employee values(11,"Dennis"); 
+
+insert into employee values(12,"Diana"); 
+
+insert into employee values(13,"Cliton"); 
+
+insert into employee values(14,"james"); 
+
+insert into employee values(15,"Mwangi"); 
+
+insert into employee values(16,"Kioko"); 
+
+insert into employee values(17,"Anita"); 
+
+insert into employee values(18,"Benson"); 
+
+insert into employee values(19,"Carol"); 
+
+insert into employee values(20,"Vivian"); 
+
+insert into department values(1,"Science"); 
+
+insert into department values(2,"Arts"); 
+
+insert into department values(3,"Law"); 
+
+insert into department values(4,"Finance"); 
+
+insert into department values(5,"Library"); 
+
+insert into department values(6,"Kitchen"); 
+
+insert into department values(7,"Sports"); 
+
+insert into department values(8,"Lab"); 
+
+insert into department values(9,"Business"); 
+
+insert into department values(10,"Education"); 
+
+ 
+
+List the employee details department wise  
+
+select emp_id,dept_id from pay_det; 
+
+List all the employee names who joined after particular date 
+
+select e,emp_name from employee e,pay_det p where e.emp_id=p.emp_id and p.doj>=’05-Feb-21’; 
+
+ 
+
+ 
+
+List the details of employees whose basic salary is between 10,000 and 20,000 
+
+Select emp_id,emp_name  from employee where salary between 10000 and 20000; 
+
+Give a count of how many employees are working in each department 
+
+select count(emp_id),dept_id from pay_det group by dept_id; 
+
+Give names of the employees whose netsalary>10,000 
+
+select emp_name from employee where emp_id in(select empid from pay_det where basic-deduction>10000); 
+
+List the details for an employee_id=5 
+
+select * from employee where emp_id=5; 
+
+Create a view which lists out the emp_name, department, basic, dedeuctions, netsalary 
+
+select e.emp_id,e.emp_name ,d.dept_id ,d.dept_name,pd.DOJ,pd.basic  from employee e,department d, paydetails pd ,payroll pr where e.emp_id=pd.emp_id and d.dept_id=pd.dept_id and e.emp_id=pr.emp_id  ; 
+
+Create a view which lists the emp_name and his netsalary 
+
+SELECT e_name, basic+addition-deduction FROM employee,paydetails WHERE employee.e_id=paydetails.e_id  AND basic+addition-deduction; 
