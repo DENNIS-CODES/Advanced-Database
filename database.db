@@ -28,7 +28,7 @@ Insert around 10 records in each of the tables
 
 insert into employee values(11,"Dennis"); 
 
-insert into employee values(12,"Diana"); 
+insert into employee values(12,"Dodo"); 
 
 insert into employee values(13,"Cliton"); 
 
